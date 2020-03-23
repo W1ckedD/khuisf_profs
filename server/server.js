@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routes
 app.use("/admin", require("./routes/admin"));
+app.use("/profs", require("./routes/prof"));
 
 app.listen(process.env.PORT, () => {
     console.log(

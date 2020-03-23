@@ -9,13 +9,12 @@ const DownloadList = require("../models/DownloadList");
 const DownloadItem = require("../models/DownloadItem");
 
 module.exports = async () => {
-    Prof.hasOne(DownloadList);
-    Prof.hasOne(Position);
-    Prof.hasOne(Major);
-    Prof.hasOne(Faculty);
+    Prof.belongsTo(Position);
+    Prof.belongsTo(Faculty);
+    Prof.belongsTo(Major);
     DownloadList.hasMany(DownloadItem);
     DownloadItem.belongsTo(DownloadList);
-    const result = await sequelize.sync();
+    const result = await sequelize.sync({ force: false });
     
     console.log(
         `Connected to: ${result.options.dialect} ${result.config.host} ${result.config.database}`
