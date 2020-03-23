@@ -1,14 +1,21 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/dbConfig');
 
-module.exports = sequelize.define('position', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
+module.exports = sequelize.define(
+    'position',
+    {
+        id: {
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        },
+        name: {
+            type: Sequelize.STRING,
+            allowNull: false
+        }
     },
-    name: {
-        type: Sequelize.STRING,
-        allowNull: false
+    {
+        charset: 'utf8',
+        collate: 'utf8_unicode_ci'
     }
-});
+);

@@ -1,6 +1,6 @@
-const Admin = require("../models/Admin");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const Admin = require('../models/Admin');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 exports.createAdmin = async (req, res, next) => {
     try {
@@ -10,7 +10,7 @@ exports.createAdmin = async (req, res, next) => {
             username,
             password: hashedPassword
         });
-        const token = jwt.sign({ Id: admin.id }, "SECRET_KEY");
+        const token = jwt.sign({ Id: admin.id }, 'SECRET_KEY');
         res.status(200).json({
             success: true,
             data: admin,
@@ -18,9 +18,9 @@ exports.createAdmin = async (req, res, next) => {
         });
     } catch (err) {
         if (err.original.errno === 1062) {
-            res.status(422).json({ error: "this admin is already registered" });
+            res.status(422).json({ error: 'this admin is already registered' });
         }
-        res.status(422).json({ error: "server error" });
+        res.status(422).json({ error: 'server error' });
     }
 };
 
@@ -29,11 +29,11 @@ exports.signin = async (req, res, next) => {
         const { username, password } = req.body;
         const admin = await Admin.findOne({ where: { username } });
         if (!admin) {
-            res.status(422).json({ error: "invalid credentials" });
+            res.status(422).json({ error: 'invalid credentials' });
         }
         const match = await bcrypt.compare(password, admin.password);
         if (match) {
-            const token = jwt.sign({ Id: admin.id }, "SECRET_KEY");
+            const token = jwt.sign({ Id: admin.id }, 'SECRET_KEY');
             res.status(200).json({
                 success: true,
                 data: admin,
@@ -41,7 +41,7 @@ exports.signin = async (req, res, next) => {
             });
         } else {
             res.status(422).json({
-                error: "invalid credential",
+                error: 'invalid credential',
                 data: {
                     match,
                     password,
@@ -51,6 +51,6 @@ exports.signin = async (req, res, next) => {
         }
     } catch (err) {
         console.log(err);
-        res.status(422).json({ error: "server error" });
+        res.status(422).json({ error: 'server error' });
     }
 };

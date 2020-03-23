@@ -1,4 +1,5 @@
-const Prof = require("../models/Prof");
+const Prof = require('../models/Prof');
+const DownloadList = require('../models/DownloadList');
 
 exports.createProf = async (req, res, next) => {
     try {
@@ -11,8 +12,10 @@ exports.createProf = async (req, res, next) => {
             bio,
             positionId,
             facultyId,
-            majorId
+            majorId,
+            downloadListId
         } = req.body;
+        const newDowloadList = await DownloadList.create({});
         const newProf = await Prof.create({
             firstName,
             lastName,
@@ -22,7 +25,8 @@ exports.createProf = async (req, res, next) => {
             bio,
             positionId,
             facultyId,
-            majorId
+            majorId,
+            downloadListId: newDowloadList.id
         });
         res.status(200).json({
             success: true,
@@ -30,7 +34,7 @@ exports.createProf = async (req, res, next) => {
         });
     } catch (err) {
         console.log(err);
-        res.status(422).json({ error: "server error" });
+        res.status(422).json({ error: 'server error' });
     }
 };
 
@@ -43,7 +47,7 @@ exports.getAllProfs = async (req, res, next) => {
         });
     } catch (err) {
         console.log(err);
-        res.status(404).json({ error: "no profs found" });
+        res.status(404).json({ error: 'no profs found' });
     }
 };
 
@@ -57,7 +61,7 @@ exports.getProfById = async (req, res, next) => {
         });
     } catch (err) {
         console.log(err);
-        res.status(404).json({ error: "no profs found matching given info" });
+        res.status(404).json({ error: 'no profs found matching given info' });
     }
 };
 
@@ -69,6 +73,6 @@ exports.deleteProf = async (req, res, next) => {
         res.status(200).json({ success: true, data: result });
     } catch (err) {
         console.log(err);
-        res.status(404).json({ error: "no profs found matching given info" });
+        res.status(404).json({ error: 'no profs found matching given info' });
     }
 };
