@@ -12,6 +12,10 @@ module.exports = sequelize.define(
         name: {
             type: Sequelize.STRING,
             allowNull: false
+        },
+        url: {
+            type: Sequelize.STRING,
+            allowNull: false
         }
     },
     {

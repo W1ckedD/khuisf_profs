@@ -12,7 +12,7 @@ module.exports = async () => {
     Prof.belongsTo(Position);
     Prof.belongsTo(Faculty);
     Prof.belongsTo(Major);
-    Prof.belongsTo(DownloadList);
+    Prof.hasOne(DownloadList);
     DownloadList.hasMany(DownloadItem);
     DownloadItem.belongsTo(DownloadList);
     const result = await sequelize.sync({ force: false });
