@@ -18,6 +18,9 @@ app.use('/faculties', require('./routes/faculty'));
 app.use('/majors', require('./routes/major'));
 app.use('/positions', require('./routes/position'));
 app.use('/download', require('./routes/downloadItem'));
+app.get('/', (req, res, next) => {
+    res.send('Testing');
+});
 
 app.listen(process.env.PORT, () => {
     console.log(

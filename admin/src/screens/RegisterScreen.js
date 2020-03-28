@@ -1,14 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
-import RegisterScreen from './RegisterScreen';
 
-const LoginScreen = props => {
-    const { signin, state } = useContext(AuthContext);
+const RegisterScreen = props => {
+    const { signup, state } = useContext(AuthContext);
     const [username, setUsername] = useState('');
     const [usernameError, setUsernameError] = useState('');
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [password2, setPassword2] = useState('');
+    const [password2Error, setPassword2Error] = useState('');
     const validate = () => {
         if (username.length < 3) {
             setUsernameError('Username must be at least 3 characters');
@@ -16,6 +17,10 @@ const LoginScreen = props => {
         }
         if (password.length < 6) {
             setPasswordError('Password must be at least 6 characters');
+            return false;
+        }
+        if (password !== password2) {
+            setPassword2Error('Passwords do not match');
             return false;
         }
         return true;
@@ -30,15 +35,19 @@ const LoginScreen = props => {
                 setPassword(e.target.value);
                 setPasswordError('');
                 break;
-            default:
+            case 'password2':
+                setPassword2(e.target.value);
+                setPassword2Error('');
                 break;
+            default:
         }
     };
     const onSubmit = e => {
         e.preventDefault();
         const isValid = validate();
         if (isValid) {
-            signin({ username, password });
+            signup({ username, password });
+            Promise.resolve()
         } else {
             return;
         }
@@ -55,8 +64,8 @@ const LoginScreen = props => {
                             value={username}
                             onChange={handleChange}
                         />
-                        <p className="text-danger">{state.errorMessage}</p>
                         <p className="text-danger">{usernameError}</p>
+                        <p className="text-danger">{state.errorMessage}</p>
                     </div>
                     <div className="form-group">
                         <label>Password</label>
@@ -69,12 +78,23 @@ const LoginScreen = props => {
                         />
                         <p className="text-danger">{passwordError}</p>
                     </div>
-                    <button className="btn btn-dark btn-block">Login</button>
+                    <div className="form-group">
+                        <label>Confirm Password</label>
+                        <input
+                            className="form-control"
+                            name="password2"
+                            value={password2}
+                            type="password"
+                            onChange={handleChange}
+                        />
+                        <p className="text-danger">{password2Error}</p>
+                    </div>
+                    <button className="btn btn-dark btn-block">Register</button>
                 </form>
                 <p>
-                    Don't have an account?{' '}
+                    Already have an account?{' '}
                     <span>
-                        <Link to="/register">Sign up</Link>
+                        <Link to="/login">Sign in</Link>
                     </span>
                 </p>
             </div>
@@ -82,4 +102,4 @@ const LoginScreen = props => {
     );
 };
 
-export default LoginScreen;
+export default RegisterScreen;
