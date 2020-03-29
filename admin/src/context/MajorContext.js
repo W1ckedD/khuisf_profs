@@ -21,6 +21,8 @@ const majorReducer = (state, action) => {
                 major: action.payload,
                 errorMessage: ''
             };
+        case 'GET_MAJOR_BY_ID':
+            return { ...state, major: action.payload, errorMessage: '' };
         case 'ADD_ERROR':
             return { ...state, errorMessage: action.payload };
         default:
@@ -58,8 +60,18 @@ const removeMajor = dispatch => async ({ id }) => {
     }
 };
 
+const getMajorById = dispatch => async ({ id }) => {
+    try {
+        const res = await api.get(`/profs/${id}`);
+        dispatch({ type: 'GET_MAJOR_BY_ID', payload: res.data.data });
+    } catch (err) {
+        console.log(err);
+        dispatch({ type: 'ADD_ERROR', payload: 'Something went wrong' });
+    }
+};
+
 export const { Context, Provider } = createDataContext(
     majorReducer,
-    { getAllMajors, createMajor, removeMajor },
+    { getAllMajors, createMajor, removeMajor, getMajorById },
     { majors: [], major: null, errorMessage: '' }
 );

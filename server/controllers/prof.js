@@ -1,4 +1,7 @@
 const Prof = require('../models/Prof');
+const Position = require('../models/Position');
+const Major = require('../models/Major');
+const Faculty = require('../models/Faculty');
 const DownloadList = require('../models/DownloadList');
 
 exports.createProf = async (req, res, next) => {
@@ -12,22 +15,23 @@ exports.createProf = async (req, res, next) => {
             bio,
             positionId,
             facultyId,
-            majorId,
-            downloadListId
+            majorId
         } = req.body;
-        const newDowloadList = await DownloadList.create({});
+        const faculty = await Faculty.findByPk(facultyId);
+        const major = await Major.findByPk(majorId);
+        const position = await Position.findByPk(positionId);
         const newProf = await Prof.create({
             firstName,
             lastName,
             imageUrl,
             email,
             researchField,
-            bio,
-            positionId,
-            facultyId,
-            majorId,
-            downloadListId: newDowloadList.id
+            bio
         });
+        await faculty.addProf(newProf);
+        await position.addProf(newProf);
+        await major.addProf(newProf);
+        newProf.createDownloadList();
         res.status(200).json({
             success: true,
             data: newProf
@@ -41,9 +45,15 @@ exports.createProf = async (req, res, next) => {
 exports.getAllProfs = async (req, res, next) => {
     try {
         const profs = await Prof.findAll();
+        const jsonProfs = JSON.parse(JSON.stringify(profs));
+        for (const i in profs) {
+            jsonProfs[i].faculty = await profs[i].getFaculty();
+            jsonProfs[i].position = await profs[i].getPosition();
+            jsonProfs[i].major = await profs[i].getMajor();
+        }
         res.status(200).json({
             success: true,
-            data: profs
+            data: jsonProfs
         });
     } catch (err) {
         console.log(err);
@@ -55,9 +65,16 @@ exports.getProfById = async (req, res, next) => {
     try {
         const { id } = req.params;
         const prof = await Prof.findByPk(id);
+        const jsonProf = JSON.parse(JSON.stringify(prof));
+        const modifiedProf = {
+            ...jsonProf,
+            faculty: await prof.getFaculty(),
+            major: await prof.getMajor(),
+            position: await prof.getPosition()
+        };
         res.status(200).json({
             success: true,
-            data: prof
+            data: modifiedProf
         });
     } catch (err) {
         console.log(err);

@@ -9,9 +9,12 @@ const DownloadList = require('../models/DownloadList');
 const DownloadItem = require('../models/DownloadItem');
 
 module.exports = async () => {
+    Position.hasMany(Prof);
     Prof.belongsTo(Position);
-    Prof.belongsTo(Faculty);
+    Major.hasMany(Prof);
     Prof.belongsTo(Major);
+    Faculty.hasMany(Prof);
+    Prof.belongsTo(Faculty);
     Prof.hasOne(DownloadList);
     DownloadList.hasMany(DownloadItem);
     DownloadItem.belongsTo(DownloadList);

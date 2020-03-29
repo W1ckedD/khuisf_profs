@@ -28,6 +28,7 @@ import RegisterScreen from './screens/RegisterScreen';
 // Profs
 import ProfsScreen from './screens/profs/ProfsScreen';
 import AddProfScreen from './screens/profs/AddProfScreen';
+import ProfDetailsScreen from './screens/profs/ProfDetailsScreen';
 
 // Positions
 import PositionsScreen from './screens/positions/PositionsScreen';
@@ -48,6 +49,9 @@ function App() {
             <div>
                 <Router>
                     <Navbar token={state.token} />
+                    <Route path="/profs/:id">
+                        <ProfDetailsScreen />
+                    </Route>
                     <Route exact path="/profs">
                         <ProfsScreen />
                     </Route>
