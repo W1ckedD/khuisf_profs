@@ -5,9 +5,8 @@ const {
     getAllProfs,
     getProfById,
     createProf,
-    deleteProf
+    deleteProf, 
 } = require('../controllers/prof');
-
 router.get('/:id', getProfById);
 router.get('/', getAllProfs);
 router.post('/create-prof', requireAdmin, createProf);

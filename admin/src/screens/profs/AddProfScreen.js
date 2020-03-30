@@ -4,7 +4,10 @@ import { Context as FacultyContext } from '../../context/FacultyContext';
 import { Context as PositionContext } from '../../context/PositionContext';
 import { Context as MajorContext } from '../../context/MajorContext';
 
+import { useHistory } from 'react-router-dom';
+
 const AddProfScreen = () => {
+    const { goBack } = useHistory();
     // Context
     const { createProf } = useContext(ProfContext);
     const facultyContext = useContext(FacultyContext);
@@ -24,9 +27,9 @@ const AddProfScreen = () => {
     const [lastName, setLastName] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [email, setEmail] = useState('');
-    const [major, setMajor] = useState(1);
-    const [faculty, setFaculty] = useState(1);
-    const [position, setPosition] = useState(1);
+    const [major, setMajor] = useState(0);
+    const [faculty, setFaculty] = useState(0);
+    const [position, setPosition] = useState(0);
     const [researchField, setResearchField] = useState('');
     const [bio, setBio] = useState('');
     const handleChange = e => {
@@ -74,6 +77,7 @@ const AddProfScreen = () => {
             bio
         };
         createProf(newProf);
+        goBack();
     };
     return (
         <div className="container">
@@ -123,6 +127,9 @@ const AddProfScreen = () => {
                             name="major"
                             value={major}
                         >
+                            <option disabled value={0}>
+                                Select a major
+                            </option>
                             {majors.map(major => (
                                 <option key={major.id} value={major.id}>
                                     {major.name}
@@ -138,6 +145,9 @@ const AddProfScreen = () => {
                             name="faculty"
                             value={faculty}
                         >
+                            <option disabled value={0}>
+                                Select a faculty
+                            </option>
                             {faculties.map(fac => (
                                 <option key={fac.id} value={fac.id}>
                                     {fac.name}
@@ -153,6 +163,9 @@ const AddProfScreen = () => {
                             name="position"
                             value={position}
                         >
+                            <option disabled value={0}>
+                                Select a position
+                            </option>
                             {positions.map(pos => (
                                 <option key={pos.id} value={pos.id}>
                                     {pos.name}

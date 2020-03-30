@@ -2,7 +2,6 @@ const Prof = require('../models/Prof');
 const Position = require('../models/Position');
 const Major = require('../models/Major');
 const Faculty = require('../models/Faculty');
-const DownloadList = require('../models/DownloadList');
 
 exports.createProf = async (req, res, next) => {
     try {
@@ -17,9 +16,10 @@ exports.createProf = async (req, res, next) => {
             facultyId,
             majorId
         } = req.body;
-        const faculty = await Faculty.findByPk(facultyId);
-        const major = await Major.findByPk(majorId);
-        const position = await Position.findByPk(positionId);
+        
+        const faculty = await Faculty.findByPk(parseInt(facultyId));
+        const major = await Major.findByPk(parseInt(majorId));
+        const position = await Position.findByPk(parseInt(positionId));
         const newProf = await Prof.create({
             firstName,
             lastName,

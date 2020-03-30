@@ -8,7 +8,7 @@ const ProfDetailsScreen = () => {
     const { prof } = state;
     const { id } = useParams();
     useEffect(() => {
-        getProfById({ id: 7 });
+        getProfById({ id });
     }, []);
     if (!prof) {
         return (
@@ -24,7 +24,7 @@ const ProfDetailsScreen = () => {
                 <div className="d-flex justify-content-between p-2">
                     <Link
                         className="btn btn-dark d-inline h-25"
-                        to={`/porfs/${prof.id}/downloads`}
+                        to={`/downloads/${prof.id}`}
                     >
                         دانلود فایل
                     </Link>

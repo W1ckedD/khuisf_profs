@@ -4,7 +4,11 @@ import api from '../api/api';
 const profReducer = (state, action) => {
     switch (action.type) {
         case 'GET_ALL_PROFS':
-            return { ...state, profs: action.payload, errorMessage: '' };
+            return {
+                ...state,
+                profs: action.payload,
+                errorMessage: ''
+            };
         case 'CREATE_PROF':
             return {
                 ...state,
@@ -13,7 +17,11 @@ const profReducer = (state, action) => {
                 errorMessage: ''
             };
         case 'GET_PROF_BY_ID':
-            return { ...state, prof: action.payload, errorMessage: '' };
+            return {
+                ...state,
+                prof: action.payload,
+                errorMessage: ''
+            };
         case 'REMOVE_PROF':
             return {
                 ...state,
@@ -24,7 +32,11 @@ const profReducer = (state, action) => {
                 errorMessage: ''
             };
         case 'EDIT_PROF':
-            return { ...state, prof: action.payload, errorMessage: '' };
+            return {
+                ...state,
+                prof: action.payload,
+                errorMessage: ''
+            };
         case 'ADD_ERROR':
             return { ...state, errorMessage: action.payload };
         default:
@@ -35,7 +47,6 @@ const profReducer = (state, action) => {
 const getAllProfs = dispatch => async () => {
     try {
         const res = await api.get('/profs');
-        console.log(res.data.data);
         dispatch({ type: 'GET_ALL_PROFS', payload: res.data.data });
     } catch (err) {
         console.log(err);
@@ -73,18 +84,8 @@ const removeProf = dispatch => async ({ id }) => {
     }
 };
 
-const editProf = dispatch => async ({ id }, prof) => {
-    try {
-        const res = await api.put(`/profs/edit-prof/${id}`, prof);
-        dispatch({ type: 'EDIT_PROF', payload: res.data.data });
-    } catch (err) {
-        console.log(err);
-        dispatch({ type: 'ADD_ERROR', payload: 'Something went wrong' });
-    }
-};
-
 export const { Context, Provider } = createDataContext(
     profReducer,
-    { getAllProfs, createProf, getProfById, removeProf, editProf },
+    { getAllProfs, createProf, getProfById, removeProf },
     { profs: [], prof: null, errorMessage: '' }
 );

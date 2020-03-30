@@ -9,6 +9,7 @@ import { Provider as ProfProvider } from './context/ProfContext';
 import { Provider as PositionProvider } from './context/PositionContext';
 import { Provider as MajorProvider } from './context/MajorContext';
 import { Provider as FacultyProvider } from './context/FacultyContext';
+import { Provider as DownloadProvider } from './context/DownloadContext';
 
 // React Router
 import {
@@ -29,6 +30,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import ProfsScreen from './screens/profs/ProfsScreen';
 import AddProfScreen from './screens/profs/AddProfScreen';
 import ProfDetailsScreen from './screens/profs/ProfDetailsScreen';
+import ProfDownloadScreen from './screens/profs/ProfDownloadScreen';
 
 // Positions
 import PositionsScreen from './screens/positions/PositionsScreen';
@@ -48,7 +50,10 @@ function App() {
         return (
             <div>
                 <Router>
-                    <Navbar token={state.token} />
+                    <Navbar />
+                    <Route path="/downloads/:id">
+                        <ProfDownloadScreen />
+                    </Route>
                     <Route path="/profs/:id">
                         <ProfDetailsScreen />
                     </Route>
@@ -67,7 +72,7 @@ function App() {
                     <Route path="/faculties">
                         <FacultiesScreen />
                     </Route>
-                    <Redirect from="*" to="/profs"/>
+                    <Redirect from="*" to="/profs" />
                 </Router>
             </div>
         );
@@ -94,13 +99,15 @@ function App() {
 export default () => (
     <AuthProvider>
         <ProfProvider>
-            <PositionProvider>
-                <MajorProvider>
-                    <FacultyProvider>
-                        <App />
-                    </FacultyProvider>
-                </MajorProvider>
-            </PositionProvider>
+            <DownloadProvider>
+                <PositionProvider>
+                    <MajorProvider>
+                        <FacultyProvider>
+                            <App />
+                        </FacultyProvider>
+                    </MajorProvider>
+                </PositionProvider>
+            </DownloadProvider>
         </ProfProvider>
     </AuthProvider>
 );

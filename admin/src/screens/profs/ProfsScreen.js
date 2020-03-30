@@ -31,7 +31,7 @@ const ProfsScreen = () => {
             <div className="grid-4">
                 {profs.map(prof => (
                     <div key={prof.id} className="card card-body text-center">
-                        <img src={prof.imageUrl} className="img-thumbnail" />
+                        <img src={prof.imageUrl} className="img-thumbnail" style={{height: 240}}/>
                         <div className="p-1">
                             <h4>
                                 {prof.firstName} {prof.lastName}
@@ -54,7 +54,6 @@ const ProfsScreen = () => {
                             >
                                 <i className="fas fa-trash"></i>
                             </button>
-                            <button className="btn btn-dark m-1">Edit</button>
                             <Link
                                 to={`/profs/${prof.id}`}
                                 className="btn btn-dark m-1"
