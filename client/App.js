@@ -7,12 +7,9 @@ import * as Font from 'expo-font';
 // Navigation
 import { NavigationContainer } from '@react-navigation/native';
 import ScreenStack from './src/components/navigators/ScreenStack';
-import { navigationRef } from './src/rootNavigation';
-import * as rootNavigation from './src/rootNavigation';
-import Header from './src/components/header/Header';
-// Context
-import { Provider as NavProvider } from './src/context/NavigationContext';
 
+// Context
+import { Provider as ProfProvider } from './src/context/ProfContext';
 const App = () => {
     const [fontLoaded, setFontLoaded] = useState(false);
     useEffect(() => {
@@ -29,10 +26,7 @@ const App = () => {
         );
     }
     return (
-        <NavigationContainer ref={navigationRef}>
-            <Header
-                openSettings={() => props.navigation.navigate('Settings')}
-            />
+        <NavigationContainer>
             <ScreenStack />
         </NavigationContainer>
     );
@@ -40,8 +34,8 @@ const App = () => {
 
 export default () => {
     return (
-        <NavProvider>
+        <ProfProvider>
             <App />
-        </NavProvider>
+        </ProfProvider>
     );
 };

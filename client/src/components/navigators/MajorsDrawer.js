@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import BachelorsScreen from '../../screens/BachelorsScreen';
 import FullTimeScreen from '../../screens/FullTimeScreen';
@@ -12,15 +12,10 @@ import {
     createDrawerNavigator,
     DrawerContentScrollView,
     DrawerItemList,
-    DrawerContent
 } from '@react-navigation/drawer';
-import { DrawerActions } from '@react-navigation/native';
 
 const Drawer = createDrawerNavigator();
-import Header from '../header/Header';
 
-// Context
-import { Context as NavContext } from '../../context/NavigationContext';
 
 const CustomDrawer = props => {
     return (
