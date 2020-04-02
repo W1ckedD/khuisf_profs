@@ -2,25 +2,36 @@ import React, { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity as TO } from 'react-native';
 import { PRIMARY_COLOR } from '../../../global/colors';
 import { Feather } from '@expo/vector-icons';
-import { DrawerActions } from '@react-navigation/native'
+import { DrawerActions } from '@react-navigation/native';
 
 const Header = props => {
-
     return (
-        <View style={styles.header}>
-            <TO
-                onPress={() => props.navigation.navigate('Settings')}
-                activeOpacity={0.8}
-            >
-                <Feather name="settings" size={30} color="white" />
-            </TO>
+        <View
+            style={
+                props.mainScreen
+                    ? styles.header
+                    : { ...styles.header, justifyContent: 'center' }
+            }
+        >
+            {props.mainScreen ? (
+                <TO
+                    onPress={() => props.navigation.navigate('Settings')}
+                    activeOpacity={0.8}
+                >
+                    <Feather name="settings" size={30} color="white" />
+                </TO>
+            ) : null}
             <Text style={styles.title}>سامانه اساتید</Text>
-            <TO
-                onPress={() => props.navigation.dispatch(DrawerActions.toggleDrawer())}
-                activeOpacity={0.8}
-            >
-                <Feather name="menu" size={30} color="white" />
-            </TO>
+            {props.mainScreen ? (
+                <TO
+                    onPress={() =>
+                        props.navigation.dispatch(DrawerActions.toggleDrawer())
+                    }
+                    activeOpacity={0.8}
+                >
+                    <Feather name="menu" size={30} color="white" />
+                </TO>
+            ) : null}
         </View>
     );
 };

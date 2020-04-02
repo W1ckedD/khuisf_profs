@@ -37,6 +37,7 @@ export default () => {
             drawerPosition="right"
             drawerContent={CustomDrawer}
             drawerContentOptions={{ labelStyle: styles.label }}
+            backBehavior="initialRoute"
         >
             <Drawer.Screen
                 name="FullTime"
